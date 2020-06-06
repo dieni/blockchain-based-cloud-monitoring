@@ -1,0 +1,11 @@
+Univie
+RestAPI:4001
+GUI:4000
+
+Amazon
+RestAPI: 4021
+GUI: 4020
+
+Azure
+RestAPI:4011
+GUI:4010

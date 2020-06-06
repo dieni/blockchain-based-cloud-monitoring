@@ -1,0 +1,32 @@
+name: basic-network
+version: 1.0.0
+client:
+  organization: Univie
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+      orderer: '300'
+channels:
+  mychannel:
+    orderers:
+      - orderer.sms.at
+    peers:
+      peer0.univie.sms.at: {}
+organizations:
+  Univie:
+    mspid: UnivieMSP
+    peers:
+      - peer0.univie.sms.at
+    certificateAuthorities:
+      - ca.sms.at
+orderers:
+  orderer.sms.at:
+    url: grpc://localhost:7050
+peers:
+  peer0.univie.sms.at:
+    url: grpc://localhost:7051
+certificateAuthorities:
+  ca.sms.at:
+    url: http://localhost:7054
+    caName: ca.sms.at

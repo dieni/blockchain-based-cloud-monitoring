@@ -1,0 +1,75 @@
+version: '3.5'
+
+networks:
+  my-network-name:
+    name: net_sms
+
+services:
+  gui.univie.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./univie/gui/:/var/run/univie/gui
+    ports:
+      - 4000:4000
+    working_dir: /var/run/univie/gui
+    command: npm start
+    networks:
+      - my-network-name
+
+  api.univie.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./univie/:/var/run/univie
+    ports:
+      - 4001:4001
+      # - 9051:9051
+    working_dir: /var/run/univie/server
+    command: npm start
+    networks:
+      - my-network-name
+
+  gui.aws.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./aws/gui/:/var/run/aws/gui
+    ports:
+      - 4020:4020
+    working_dir: /var/run/aws/gui
+    command: npm start
+    networks:
+      - my-network-name
+
+  api.aws.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./aws/:/var/run/aws
+    ports:
+      - 4021:4021
+      # - 7051:7051
+    working_dir: /var/run/aws/server
+    command: npm start
+    networks:
+      - my-network-name
+
+  gui.azure.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./azure/gui/:/var/run/azure/gui
+    ports:
+      - 4010:4010
+    working_dir: /var/run/azure/gui
+    command: npm start
+    networks:
+      - my-network-name
+
+  api.azure.sms.at:
+    image: node:10.19.0
+    volumes:
+      - ./azure/:/var/run/azure
+    ports:
+      - 4011:4011
+      # - 8051:8051
+    working_dir: /var/run/azure/server
+    command: npm start
+    networks:
+      - my-network-name

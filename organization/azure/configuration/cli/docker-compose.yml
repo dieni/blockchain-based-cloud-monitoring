@@ -1,0 +1,38 @@
+#
+# Copyright IBM Corp All Rights Reserved
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+version: '2'
+
+networks:
+  basic:
+    external:
+      name: net_basic
+
+services:
+  cliUnivie:
+    container_name: cliUnivie
+    image: hyperledger/fabric-tools:1.4.4
+    tty: true
+    environment:
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=info
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.univie.sms.at:7051
+      - CORE_PEER_LOCALMSPID=UnivieMSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/univie.sms.at/users/Admin@univie.sms.at/msp
+      - CORE_CHAINCODE_KEEPALIVE=10
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+      - /var/run/:/host/var/run/
+      - ./../../../../organization/univie:/opt/gopath/src/github.com/
+      - ./../../../../network/crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+    networks:
+      - basic
+    #depends_on:
+    #  - orderer.sms.at
+    #  - peer0.univie.sms.at
+    #  - couchdb

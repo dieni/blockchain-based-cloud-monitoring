@@ -1,0 +1,21 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "response.js",
+  "scripts": {
+    "lint": "eslint .",
+    "test": "rm -rf _idwallet && node addToWallet.js && node response.js"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "fabric-contract-api": "^2.0.0",
+    "fabric-shim": "^2.0.0",
+    "js-yaml": "^3.12.0",
+    "fabric-network": "^1.4.5"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
+  }
+}

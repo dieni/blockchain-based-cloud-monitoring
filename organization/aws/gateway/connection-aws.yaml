@@ -1,0 +1,39 @@
+name: net-sms
+version: 1.0.0
+client:
+  organization: aws
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+      orderer: '300'
+channels:
+  channel-aws:
+    orderers:
+      - orderer.sms.at
+    peers:
+      peer0.aws.sms.at: {}
+organizations:
+  aws:
+    mspid: AwsMSP
+    peers:
+      - peer0.aws.sms.at
+    # certificateAuthorities:
+    #   - ca.univie.sms.at
+orderers:
+  orderer.sms.at:
+    # url: grpc://localhost:7050
+    url: grpc://orderer.sms.at:7050
+peers:
+  peer0.aws.sms.at:
+    # url: grpc://localhost:7051
+    url: grpc://peer0.aws.sms.at:7051
+    # grpcOptions:
+    #   ssl-target-name-override: peer0.univie.sms.at
+    #   hostnameOverride: peer0.univie.sms.at
+# certificateAuthorities:
+#   ca.univie.sms.at:
+#     url: http://localhost:8054
+#     caName: ca-univie
+#     httpOptions:
+#       verify: false

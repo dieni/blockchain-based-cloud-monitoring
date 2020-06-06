@@ -1,0 +1,87 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+services:
+  orderer.sms.at:
+    container_name: orderer.sms.at
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ../channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ../crypto-config/ordererOrganizations/sms.at/orderers/orderer.sms.at/msp:/var/hyperledger/orderer/msp
+      - ../crypto-config/ordererOrganizations/sms.at/orderers/orderer.sms.at/tls/:/var/hyperledger/orderer/tls
+      - orderer.sms.at:/var/hyperledger/production/orderer
+    ports:
+      - 7050:7050
+
+  peer0.aws.sms.at:
+    container_name: peer0.aws.sms.at
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.aws.sms.at
+      - CORE_PEER_ADDRESS=peer0.aws.sms.at:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.aws.sms.at:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      #- CORE_PEER_GOSSIP_BOOTSTRAP=peer1.aws.sms.at:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.aws.sms.at:7051
+      - CORE_PEER_LOCALMSPID=AwsMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/aws.sms.at/peers/peer0.aws.sms.at/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/aws.sms.at/peers/peer0.aws.sms.at/tls:/etc/hyperledger/fabric/tls
+      - peer0.aws.sms.at:/var/hyperledger/production
+    ports:
+      - 7051:7051
+
+  peer0.azure.sms.at:
+    container_name: peer0.azure.sms.at
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.azure.sms.at
+      - CORE_PEER_ADDRESS=peer0.azure.sms.at:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.azure.sms.at:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.azure.sms.at:8051
+      #- CORE_PEER_GOSSIP_BOOTSTRAP=peer0.aws.sms.at:7051
+      - CORE_PEER_LOCALMSPID=AzureMSP
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/azure.sms.at/peers/peer0.azure.sms.at/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/azure.sms.at/peers/peer0.azure.sms.at/tls:/etc/hyperledger/fabric/tls
+      - peer0.azure.sms.at:/var/hyperledger/production
+    ports:
+      - 8051:8051
+
+  peer0.univie.sms.at:
+    container_name: peer0.univie.sms.at
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.univie.sms.at
+      - CORE_PEER_ADDRESS=peer0.univie.sms.at:9051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.univie.sms.at:9052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.univie.sms.at:9051
+      #- CORE_PEER_GOSSIP_BOOTSTRAP=peer1.univie.sms.at:10051
+      - CORE_PEER_LOCALMSPID=UnivieMSP
+      - CORE_VM_DOCKER_ATTACHSTDOUT=true
+    volumes:
+      - /var/run/:/host/var/run/
+      - ../crypto-config/peerOrganizations/univie.sms.at/peers/peer0.univie.sms.at/msp:/etc/hyperledger/fabric/msp
+      - ../crypto-config/peerOrganizations/univie.sms.at/peers/peer0.univie.sms.at/tls:/etc/hyperledger/fabric/tls
+      - peer0.univie.sms.at:/var/hyperledger/production
+    ports:
+      - 9051:9051

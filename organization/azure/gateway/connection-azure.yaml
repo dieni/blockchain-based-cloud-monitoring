@@ -1,0 +1,30 @@
+name: net-sms
+version: 1.0.0
+client:
+  organization: azure
+  connection:
+    timeout:
+      peer:
+        endorser: '300'
+      orderer: '300'
+channels:
+  channel-azure:
+    orderers:
+      - orderer.sms.at
+    peers:
+      peer0.azure.sms.at: {}
+organizations:
+  azure:
+    mspid: AzureMSP
+    peers:
+      - peer0.azure.sms.at
+    # certificateAuthorities:
+    #   - ca.univie.sms.at
+orderers:
+  orderer.sms.at:
+    # url: grpc://localhost:7050
+    url: grpc://orderer.sms.at:7050
+peers:
+  peer0.azure.sms.at:
+    # url: grpc://localhost:8051
+    url: grpc://peer0.azure.sms.at:8051

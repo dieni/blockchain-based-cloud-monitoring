@@ -1,0 +1,35 @@
+docker exec cliUnivie peer chaincode install -n servicecontract -v 0 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n servicecontract -v 0 -l node -c '{"Args":["transactionA"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+docker exec cliUnivie peer chaincode install -n servicecontract -v 0 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n servicecontract -v 0 -l node -c '{"Args":["initLedger"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+docker exec cliUnivie peer chaincode install -n response-time -v 24 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n response-time -v 1 -l node -c '{"Args":["initLedger"]}' -C mychannel -P "AND ('Org1MSP.member')"
+docker exec cliUnivie peer chaincode upgrade -n response-time -v 24 -l node -c '{"Args":["init"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+docker exec cliUnivie peer chaincode install -n instance-5b8 -v 53 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n instance-5b8 -v 1 -l node -c '{"Args":["init","name","5b8", "dimensionName", "InstanceId", "dimensionValue", "i-0e1a2b40a43eac5b8", "region", "eu-central-1", "accessKeyId", "AKIATV3XKQLS7ZNLLEUT", "secretAccessKey", "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"]}' -C mychannel -P "AND ('Org1MSP.member')"
+docker exec cliUnivie peer chaincode upgrade -n instance-5b8 -v 53 -l node -c '{"Args":["init","5b8", "InstanceId", "i-0e1a2b40a43eac5b8", "eu-central-1", "AKIATV3XKQLS7ZNLLEUT", "YiVfVe8Q4yrSbr4sarfaLjGP7EbdEOBfY7PQ+i8E"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+docker exec cliUnivie peer chaincode install -n instance-5b8 -v 4 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n instance-5b8 -v 1 -l node -c '{"Args":["init","name","5b8"]}' -C mychannel -P "AND ('Org1MSP.member')"
+docker exec cliUnivie peer chaincode upgrade -n instance-5b8 -v 4 -l node -c '{"Args":["init","name","5b8"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+//ec2-contract
+docker exec cliUnivie peer chaincode install -n ec2-contract -v 1 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n ec2-contract -v 1 -l node -c '{"Args":["instantiate"]}' -C mychannel -P "AND ('UnivieMSP.member')"
+docker exec cliUnivie peer chaincode upgrade -n ec2-contract -v 9 -l node -c '{"Args":["instantiate"]}' -C mychannel -P "AND ('UnivieMSP.member')"
+
+//fabcar example
+docker exec cliUnivie peer chaincode install -n fabcar -v 5 -p /opt/gopath/src/github.com/contract -l node
+docker exec cliUnivie peer chaincode instantiate -n fabcar -v 1 -l node -c '{"Args":["initLedger"]}' -C mychannel -P "AND ('Org1MSP.member')"
+docker exec cliUnivie peer chaincode upgrade -n fabcar -v 5 -l node -c '{"Args":["initLedger"]}' -C mychannel -P "AND ('Org1MSP.member')"
+
+
+
+peer chaincode instantiate -o orderer.sms.at:7050 -C channel-aws -n ec2contract -l node -v 1.0.0 -c '{"Args":["instantiate"]}' -P 'OR ('\''AwsMSP.peer'\'','\''UnivieMSP.peer'\'')'
+
+
+
+node node_modules/react-scripts/scripts/start.js
