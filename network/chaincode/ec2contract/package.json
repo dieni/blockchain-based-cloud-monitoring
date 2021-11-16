@@ -17,7 +17,7 @@
     "author": "Hyperledger",
     "license": "Apache-2.0",
     "dependencies": {
-        "aws-sdk": "^2.606.0",
+        "aws-sdk": "^2.814.0",
         "fabric-contract-api": "~1.4.4",
         "fabric-shim": "~1.4.4",
         "request": "~2.88.0"
